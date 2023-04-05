@@ -1,7 +1,7 @@
 pipeline {
 	agent any
 	stages {
-		stage("SCM") {
+		stage("SCM pushing") {
 			steps {
 				git 'https://github.com/wssrronak/java-docker-app.git'
 				}
