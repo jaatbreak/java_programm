@@ -3,7 +3,7 @@ pipeline {
 	stages {
 		stage("SCM pushing") {
 			steps {
-				git 'https://github.com/wssrronak/java-docker-app.git'
+				git 'https://github.com/gouravaas/java_docker_app.git'
 				}
 			}
 
@@ -16,7 +16,7 @@ pipeline {
 		stage("Image") {
 			steps {
 				sh 'sudo docker build -t java-repo:$BUILD_TAG .'
-				sh 'sudo docker tag java-repo:$BUILD_TAG srronak/pipeline-java:$BUILD_TAG'
+				sh 'sudo docker tag java-repo:$BUILD_TAG Gouravaas/pipeline-java:$BUILD_TAG'
 				}
 			}
 				
@@ -24,8 +24,8 @@ pipeline {
 		stage("Docker Hub") {
 			steps {
 			withCredentials([string(credentialsId: 'docker_hub_passwd', variable: 'docker_hub_password_var')]) {
-				sh 'sudo docker login -u srronak -p ${docker_hub_password_var}'
-				sh 'sudo docker push srronak/pipeline-java:$BUILD_TAG'
+				sh 'sudo docker login -u Gouravaas -p ${docker_hub_password_var}'
+				sh 'sudo docker push Gouravaas/pipeline-java:$BUILD_TAG'
 				}
 			}	
 
@@ -33,7 +33,7 @@ pipeline {
 		stage("QAT Testing") {
 			steps {
 				sh 'sudo docker rm -f $(sudo docker ps -a -q)'
-				sh 'sudo docker run -dit -p 8080:8080  srronak/pipeline-java:$BUILD_TAG'
+				sh 'sudo docker run -dit -p 8080:8080  Gouravaas/pipeline-java:$BUILD_TAG'
 				}
 			}
 		stage("testing website") {
@@ -56,7 +56,7 @@ pipeline {
 			steps {
 			 sshagent(['ubuntu']) {
 			    sh 'ssh -o StrictHostKeyChecking=no ubuntu@65.2.140.187 sudo docker rm -f $(sudo docker ps -a -q)' 
-	                    sh "ssh -o StrictHostKeyChecking=no ubuntu@65.2.140.187 sudo docker run  -d  -p  49153:8080  srronak/javatest-app:$BUILD_TAG"
+	                    sh "ssh -o StrictHostKeyChecking=no ubuntu@65.2.140.187 sudo docker run  -d  -p  49153:8080  Gouravaas/javatest-app:$BUILD_TAG"
 				}
 			}
 		}
