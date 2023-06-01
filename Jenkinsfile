@@ -1,6 +1,8 @@
 pipeline{
 	
-	agent any
+	agent {
+		label "ubuntu-slave"
+		}
 		stages{
 			stage ("Pull the code from SCM"){
 				steps {
