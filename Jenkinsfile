@@ -9,7 +9,7 @@ pipeline{
 				}
 			stage (" Build the code "){
 				steps {
-					sh 'mvn clean package'
+					sh 'sudo mvn clean package'
 					}
 				}
 			stage (" Build the image "){
