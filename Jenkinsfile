@@ -4,7 +4,7 @@ pipeline{
 		stages{
 			stage ("Pull the code from SCM"){
 				steps {
-					git 'https://github.com/gouravaas/new_java_docker_app.git'
+					git branch: 'main', url: 'https://github.com/gouravaas/new_java_docker_app.git'
 					}
 				}
 			stage (" Build the code "){
