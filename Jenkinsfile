@@ -18,7 +18,7 @@ pipeline{
 			stage (" Build the image "){
 				steps {
 					sh 'sudo docker build -t java-repo:$BUILD_TAG .'
-					sh 'sudo docker tag java-repo:$BUILD_TAG Gouravaas/pipeline-java:$BUILD_TAG'
+					sh 'sudo docker tag java-repo:$BUILD_TAG gouravaas/pipeline-java:$BUILD_TAG'
 					}
 				}
 			}
