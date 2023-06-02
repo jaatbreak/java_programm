@@ -40,7 +40,7 @@ pipeline{
 				steps {
 					retry(5) {
 						script {
-							sh 'curl --silent http://43.205.124.201:8080/java-web-app/ | grep -i "india" '
+							sh 'curl --silent http://43.205.124.201:8080/java-web-app/ | grep -i "india" > /home/ubuntu/test.txt'
 							}
 						}
 					}
