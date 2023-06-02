@@ -34,6 +34,13 @@ pipeline{
 					sh 'sudo docker run -dit -p 8080:8080 gouravaas/java-app:$BUILD_TAG'
 					}
 				}
+			stage("testing website") {
+				steps {
+					retry(5) {
+					sh 'curl --silent http://43.205.124.201:8080/java-web-app/ | grep -i "india" '
+						}
+					}
+				}
 			}
 		
 }
