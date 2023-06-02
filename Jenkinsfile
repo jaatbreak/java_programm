@@ -21,6 +21,13 @@ pipeline{
 					sh 'sudo docker tag java-repo:$BUILD_TAG gouravaas/pipeline-java:$BUILD_TAG'
 					}
 				}
+			stage ( " push the image "){
+				steps {
+					withCredentials([string(credentialsId: 'docker_hub_passwd', variable: 'docker_hub_password_var')]) {
+				sh 'sudo docker login -u Gouravaas -p ${docker_hub_password_var}'
+				sh 'sudo docker push Gouravaas/pipeline-java:$BUILD_TAG'
+					}
+				}
 			}
 		
 }
