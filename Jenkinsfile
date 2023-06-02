@@ -23,9 +23,10 @@ pipeline{
 				}
 			stage ( " push the image "){
 				steps {
-				withCredentials([string(credentialsId: 'docker_hub_passwd', variable: 'docker_hub_password_var')])
-				sh 'sudo docker login -u gouravaas -p $docker_hub_password_var'
-				sh 'sudo docker push gouravaas/java-app:$BUILD_TAG'
+				withCredentials([string(credentialsId: 'docker_hub_passwd', variable: 'docker_hub_password_var')]){
+					sh 'sudo docker login -u gouravaas -p $docker_hub_password_var'
+					sh 'sudo docker push gouravaas/java-app:$BUILD_TAG'
+						}
 					}
 				}
 			stage("QAT Testing") {
