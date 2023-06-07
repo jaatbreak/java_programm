@@ -32,7 +32,7 @@ pipeline{
 			stage("QAT Testing") {
 				steps {
 					script {
-						sh 'sudo docker run -dit -p 8000:8080 amansingh12/java-app:$BUILD_TAG'
+						sh 'sudo docker run -dit -p :8080 amansingh12/java-app:$BUILD_TAG'
 						}
 					}
 				}
@@ -40,11 +40,18 @@ pipeline{
 				steps {
 					retry(5) {
 						script {
-							sh 'curl --silent http://43.205.124.201:8080/java-web-app/ | grep -i "india" > /home/ubuntu/test.txt'
+							sh 'curl -h http://43.205.124.201:8080/java-web-app/ | grep -i "india" > /home/ubuntu/test.txt'
 							}
 						}
 					}
+				
 				}
+			stage("You want run the app in production"){
+				steps{
+					script{
+						
+					}
+				}	
 			}
-		
+			}
 }
