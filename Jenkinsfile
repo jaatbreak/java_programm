@@ -1,7 +1,7 @@
 pipeline{
 	
 	agent {
-		label "slave-1"
+		label "dev"
 		}
 		stages{
 			stage ("Pull the code from SCM"){
