@@ -54,5 +54,14 @@ pipeline{
 					}
 				}	
 			}
+			stage("Prod Env") {
+				steps {
+					sshagent(['ubuntu']) {
+			    	 	sh "ssh -o StrictHostKeyChecking=no ubuntu@13.212.147.47 sudo kubectl run java  image=amansingh12/java-app:$BUILD_TAG"
+					sh "sudo kubectl expose pod java --type=NodePort --port=8080 "
+					sh "sudo kubectl get svc "
+				}
+			}
 		}
+	}
 }
