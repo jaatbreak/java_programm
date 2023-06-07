@@ -38,7 +38,7 @@ pipeline{
 				}
 			stage("testing website") {
 				steps {
-					retry(5) {
+					retry(2) {
 						script {
 							sh ' sudo curl  http://43.205.124.201:8080/java-web-app/  > /home/ubuntu/test.txt'
 							}
@@ -54,7 +54,10 @@ pipeline{
 					}
 				}	
 			}
-			stage("Prod Env") {
+			stage("Production Environment") {
+				agent{
+					label "deploy"
+				}
 				steps {
 					sshagent(['ubuntu']) {
 			    	 	sh "ssh -o StrictHostKeyChecking=no ubuntu@13.212.147.47 sudo kubectl run java  image=amansingh12/java-app:$BUILD_TAG"
