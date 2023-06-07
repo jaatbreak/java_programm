@@ -40,7 +40,7 @@ pipeline{
 				steps {
 					retry(5) {
 						script {
-							sh 'curl  http://43.205.124.201:8080/java-web-app/  > /home/ubuntu/test.txt'
+							sh ' sudo curl  http://43.205.124.201:8080/java-web-app/  > /home/ubuntu/test.txt'
 							}
 						}
 					}
