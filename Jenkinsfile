@@ -1,12 +1,12 @@
 pipeline{
 	
 	agent {
-		label "slave-1"
+		label "dev"
 		}
 		stages{
 			stage ("Pull the code from SCM"){
 				steps {
-					git branch: 'main', url: 'https://github.com/jaatbreak/java_programm.git'
+					git branch: 'main', url: 'https://github.com/gouravaas/new_java_docker_app.git'
 					}
 				}
 			stage (" Build the code "){
@@ -18,7 +18,7 @@ pipeline{
 			stage (" Build the image "){
 				steps {
 					sh 'sudo docker build -t java-repo:$BUILD_TAG .'
-					sh 'sudo docker tag java-repo:$BUILD_TAG amansingh12/java-app:$BUILD_TAG'
+					sh 'sudo docker tag java-repo:$BUILD_TAG amansingh/java-app:$BUILD_TAG'
 					}
 				}
 			stage ( " push the image "){
@@ -38,31 +38,28 @@ pipeline{
 				}
 			stage("testing website") {
 				steps {
-					retry(2) {
+					retry(3) {
 						script {
-							sh ' sudo curl  http://43.205.124.201:8080/java-web-app/  > /home/ubuntu/test.txt'
+							sh 'curl --silent http:// 172.31.23.3:8080/java-web-app/ | grep -i "india" '
 							}
 						}
 					}
-				
 				}
-			stage("You want run the app in production"){
-				steps{
-					script{
-					    Boolean userInput = input(id: 'Proceed1', message: 'Promote build?', parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']])
+			stage("Approval status") {
+				steps {
+					script {
+						 Boolean userInput = input(id: 'Proceed1', message: 'Promote build?', parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']])
                 				echo 'userInput: ' + userInput
 					}
-				}	
+				}
 			}
-			stage("Production Environment") {
+			stage("Production  Env") {
 				agent{
-					label "deploy"
+				
 				}
 				steps {
-					sshagent(['ubuntu']) {
-			    	 	sh "ssh -o StrictHostKeyChecking=no ubuntu@13.212.147.47 sudo kubectl run java  image=amansingh12/java-app:$BUILD_TAG"
-					sh "sudo kubectl expose pod java --type=NodePort --port=8080 "
-					sh "sudo kubectl get svc "
+					sshagent(['kuber_node']) {
+			    	 	sh "ssh -o StrictHostKeyChecking=no ubuntu@13.212.147.47 sudo kubectl run c1 amansingh/java-app:$BUILD_TAG'
 				}
 			}
 		}
