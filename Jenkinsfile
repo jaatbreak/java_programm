@@ -6,7 +6,7 @@ pipeline{
 		stages{
 			stage ("Pull the code from SCM"){
 				steps {
-					git branch: 'main', url: 'https://github.com/amansingh12/java_programm.git'
+					git branch: 'main', url: 'https://github.com/jaatbreak/java_programm.git'
 					}
 				}
 			stage (" Build the code "){
