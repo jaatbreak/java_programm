@@ -32,7 +32,7 @@ pipeline{
 			stage("QAT Testing") {
 				steps {
 					script {
-						sh 'sudo docker run -dit -p 8080:8080 amansingh12/java-app:$BUILD_TAG'
+						sh 'sudo docker run -dit -p 8000:8080 amansingh12/java-app:$BUILD_TAG'
 						}
 					}
 				}
