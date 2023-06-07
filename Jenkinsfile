@@ -1,12 +1,12 @@
 pipeline{
 	
 	agent {
-		label "ubuntu-slave"
+		label "slave-1"
 		}
 		stages{
 			stage ("Pull the code from SCM"){
 				steps {
-					git branch: 'main', url: 'https://github.com/gouravaas/new_java_docker_app.git'
+					git branch: 'main', url: 'https://github.com/amansingh12/java_programm.git'
 					}
 				}
 			stage (" Build the code "){
@@ -18,21 +18,21 @@ pipeline{
 			stage (" Build the image "){
 				steps {
 					sh 'sudo docker build -t java-repo:$BUILD_TAG .'
-					sh 'sudo docker tag java-repo:$BUILD_TAG gouravaas/java-app:$BUILD_TAG'
+					sh 'sudo docker tag java-repo:$BUILD_TAG amansingh12/java-app:$BUILD_TAG'
 					}
 				}
 			stage ( " push the image "){
 				steps {
-				withCredentials([string(credentialsId: 'docker_hub_passwd', variable: 'docker_hub_password_var')]){
-					sh 'sudo docker login -u gouravaas -p $docker_hub_password_var'
-					sh 'sudo docker push gouravaas/java-app:$BUILD_TAG'
+				withCredentials([string(credentialsId: 'docker_hub', variable: 'docker_var')]){
+					sh 'sudo docker login -u amansingh12 -p $docker_var'
+					sh 'sudo docker push amansingh12/java-app:$BUILD_TAG'
 						}
 					}
 				}
 			stage("QAT Testing") {
 				steps {
 					script {
-						sh 'sudo docker run -dit -p 8080:8080 gouravaas/java-app:$BUILD_TAG'
+						sh 'sudo docker run -dit -p 8080:8080 amansingh12/java-app:$BUILD_TAG'
 						}
 					}
 				}
