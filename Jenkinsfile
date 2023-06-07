@@ -55,7 +55,7 @@ pipeline{
 			}
 			stage("Production  Env") {
 				agent{
-				
+				label "deploy"
 				}
 				steps {
 					sshagent(['kuber_node']) {
