@@ -53,16 +53,5 @@ pipeline{
 					}
 				}
 			}
-			stage("Production  Env") {
-				agent{
-				label "deploy"
-				}
-				steps {
-					sshagent(['kuber_node']) {
-			    	 	sh "ssh -o StrictHostKeyChecking=no ubuntu@13.212.127.151 sudo kubectl run c1 image=amansingh12/java-app:$BUILD_TAG'
-						
-				}
-			}
-		}
-	}
+			
 }
