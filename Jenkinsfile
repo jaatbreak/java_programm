@@ -50,10 +50,13 @@ pipeline{
 				}
 			}
 			stage("Prod Env") {
-				steps {
-					sshagent(['kuber_node']) {
-			    	 	sh "ssh -o StrictHostKeyChecking=no ubuntu@13.212.127.151 sudo docker run  -d  -p  :8080  amansingh12/java-app:$BUILD_TAG"
+				agent{
+			            label "deploy"
 				}
+				steps {
+					
+			    	 	sh 'sudo kubectl run c1 image=amansingh12/java-app:$BUILD'
+					sh 'sudo kubectl expose pod c1 image==amansingh12/java-app:$BUILD --type=NodePort --port=8080 '
 			}
 		}
 	     }
