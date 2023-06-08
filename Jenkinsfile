@@ -54,9 +54,9 @@ pipeline{
 				label "deploy"
 				}
 				steps {
-					sshagent(['kuber_node']) {
+				    sshagent(['kuber_node']) {
 			    	 	sh "ssh -o StrictHostKeyChecking=no ubuntu@13.212.127.151 sudo kubectl run c1 image=amansingh12/java-app:$BUILD_TAG'
-						sh 'sudo kubectl expose pod c1 image=amansingh12/java-app:$BUILD_TAG  --type=NodePort --port="8080"'
+					sh 'sudo kubectl expose pod c1 image=amansingh12/java-app:$BUILD_TAG  --type=NodePort --port=8080'
 						
 				}
 			}
