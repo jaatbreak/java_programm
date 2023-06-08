@@ -55,7 +55,7 @@ pipeline{
 				}
 				steps {
 					
-			    	 	sh 'sudo kubectl run c1 image=amansingh12/java-app:$BUILD'
+			    	 	sh 'sudo kubectl run c1 image=amansingh12/java-app:$BUILD_TAG'
 					sh 'sudo kubectl expose pod c1 image==amansingh12/java-app:$BUILD --type=NodePort --port=8080 '
 			}
 		}
